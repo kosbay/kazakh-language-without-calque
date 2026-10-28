@@ -29,7 +29,6 @@ skills/kazakh-without-calque/
     └── check_calques.py  # Flags known calques in a text (Python 3, no dependencies)
 data/
 └── calques.jsonl         # Structured dataset: 3,301 entries, each linked to its source post
-scripts/                  # How the dataset was built (scrape → extract → merge → references)
 ```
 
 The instructions are written in English because AI agents follow English meta-instructions most reliably. All rules and examples are in Kazakh.
@@ -72,10 +71,7 @@ line 3: «жобаның талқылауы» — Known calque. ✅ жобаны
 
 ## How the dataset was built
 
-1. `scripts/scrape_telegram.py` downloaded the channel's public posts (texts only for now).
-2. AI agents extracted each post into structured entries following `scripts/EXTRACTION_PROMPT.md`. Off-topic posts (ads, announcements, reactions) were skipped.
-3. `scripts/merge_extracted.py` validated and de-duplicated the entries into `data/calques.jsonl`.
-4. `scripts/build_references.py` generated `references/`. Entries marked low confidence are kept out of the skill; these are mostly posts that mark an error without giving a fix.
+The channel's public text posts were downloaded, and AI agents turned each post into structured entries. Off-topic posts (ads, announcements, reactions) were skipped. The entries were then checked, de-duplicated and saved to `data/calques.jsonl`, and `references/` was generated from that file. Entries marked low confidence are kept out of the skill; these are mostly posts that mark an error without giving a fix.
 
 Each entry looks like this:
 
@@ -91,7 +87,6 @@ Not yet included: examples that exist only as images in the channel (about 1,000
 
 - **Found a wrong entry?** Open an issue with the entry and the post link.
 - **Low-confidence entries** in `data/calques.jsonl` need a native speaker's review. Many just need the correct form filled in.
-- After editing `data/calques.jsonl`, run `python3 scripts/build_references.py` to rebuild the references.
 
 ## Қазақша
 
@@ -106,4 +101,4 @@ Not yet included: examples that exist only as images in the channel (about 1,000
 ## License
 
 - **Rules, examples and dataset** (`skills/kazakh-without-calque/SKILL.md`, `references/`, `data/`): [CC BY 4.0](LICENSE-DATA). Use them freely, including commercially, but credit the source: *«Калькасыз қазақ тілі», Назгүл Қожабек, https://t.me/kalkastop*.
-- **Code** (`scripts/`, `check_calques.py`): [MIT](LICENSE).
+- **Code** (`check_calques.py`): [MIT](LICENSE).
